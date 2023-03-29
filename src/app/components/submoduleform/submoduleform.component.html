@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>{{ data?.submodule ? 'Edit' : 'Add' }} SubModule</h2>
+<div mat-dialog-content>
+    <form [formGroup]="submoduleForm">
+        <mat-form-field>
+            <input matInput formControlName="subModuleName" placeholder="subModuleName" required>
+            <mat-error *ngIf="submoduleForm.get('subModuleName')?.invalid">
+              subModuleName is required
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select formControlName="functions" multiple placeholder="Select functions" panelClass="function-select-panel" (selectionChange)="toggleFunction($event.value)">
+                <mat-option *ngFor="let function of functions" [value]="function" [ngClass]="{ 'mat-selected': function.selected }">
+                    {{ function.functionName }} 
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="selectedFunctions.length > 0" class="selected-functions">
+            <p class="selected-functions-title">Selected functions:</p>
+            <div class="selected-functions-container">
+                <div *ngFor="let function of selectedFunctions" class="selected-function">
+                    <mat-icon class="remove-icon" (click)="toggleFunction(function)">close</mat-icon>
+                    <span>{{ function.functionName }} </span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="saveSubModule()" [disabled]="!submoduleForm.valid">
+        {{ data?.module ? 'Update' : 'Add' }} SubModule
+    </button>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+</div>

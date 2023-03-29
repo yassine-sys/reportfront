@@ -1,0 +1,6 @@
+.layout-navbar-fixed .wrapper .brand-link {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    transition: width .3s ease-in-out;
+}
