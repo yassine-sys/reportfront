@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ data?.submodule ? 'Edit' : 'Add' }} SubModule</h2>
+<!-- <h2 mat-dialog-title>{{ data?.submodule ? 'Edit' : 'Add' }} SubModule</h2>
 <div mat-dialog-content>
     <form [formGroup]="submoduleForm">
         <mat-form-field>
@@ -32,4 +32,37 @@
         {{ data?.module ? 'Update' : 'Add' }} SubModule
     </button>
     <button mat-raised-button mat-dialog-close>Cancel</button>
-</div>
+</div> -->
+
+<div >
+    <h2>Add Submodule</h2>
+    <form [formGroup]="addSubmoduleForm" (ngSubmit)="onSubmit()">
+        
+        <label for="subModuleName">Submodule Name:</label>
+        <input type="text" class="form-control" id="subModuleName" formControlName="subModuleName" required>
+        <div *ngIf="addSubmoduleForm.controls['subModuleName'].invalid && (addSubmoduleForm.controls['subModuleName'].dirty || addSubmoduleForm.controls['subModuleName'].touched)" class="text-danger">
+          <div *ngIf="addSubmoduleForm.controls['subModuleName'].errors ">Submodule Name is required.</div> -->
+
+          
+         </div>
+    
+    
+        <label for="path">Path:</label>
+        <input type="text" class="form-control" id="path" formControlName="path" required>
+        <div *ngIf="addSubmoduleForm.controls['path'].invalid && (addSubmoduleForm.controls['path'].dirty || addSubmoduleForm.controls['path'].touched)" class="text-danger">
+          <div *ngIf="addSubmoduleForm.controls['path'].errors ">Path is required.</div>
+        </div>
+    
+        <label for="moduleId">Module:</label>
+        <select class="form-control" id="moduleId" formControlName="moduleId" required>
+          <option *ngFor="let module of modules" [value]="module.id">{{ module.moduleName }}</option>
+        </select>
+    
+      <button mat-raised-button color="primary" type="submit" class="btn btn-primary">Add Submodule</button>
+      <button mat-raised-button mat-dialog-close>Cancel</button>
+    </form>
+  </div>
+  
+
+
+  

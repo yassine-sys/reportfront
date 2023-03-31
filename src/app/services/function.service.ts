@@ -21,7 +21,7 @@ export class FunctionService {
   public addFonction(fonction:any) {
     return this.http.post('http://localhost:8080/function/add',fonction);
   }
-  public updateFonction(fonction:any,id:number):Observable<Object>{
+  public updateFonction(id:number,fonction:any){
     return this.http.put(`${"http://localhost:8080"}/function/edit/${id}`,fonction);
   }
 

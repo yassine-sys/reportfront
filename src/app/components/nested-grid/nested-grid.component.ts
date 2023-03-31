@@ -13,6 +13,8 @@ import { SubmoduleformComponent } from '../submoduleform/submoduleform.component
 import { FonctionformComponent } from '../fonctionform/fonctionform.component';
 import { SubmoduleService } from 'src/app/services/submodule.service';
 import { FunctionService } from 'src/app/services/function.service';
+import { UpdatesubmodulemodalComponent } from '../updatesubmodulemodal/updatesubmodulemodal.component';
+import { UpdatefunctionmodalComponent } from '../updatefunctionmodal/updatefunctionmodal.component';
 
 
 @Component({
@@ -34,6 +36,13 @@ export class NestedGridComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog) {}
 
     ngOnInit(): void {
+      this.submoduleService.getAllSubModules().subscribe(data=>{
+        console.log(data)
+      })
+
+      this.functionService.getAllFunction().subscribe(data=>console.log(data))
+
+
       this.dataService.getAllModules().subscribe(data => {
         this.modules = data;
         this.dataSource = new MatTableDataSource(this.modules);
@@ -81,6 +90,32 @@ export class NestedGridComponent implements OnInit, AfterViewInit {
     })
   }
 
+  openUpdateSubmoduleModal(row:any) {
+    const dialogRef = this.dialog.open(UpdatesubmodulemodalComponent, {
+      width: '400px',
+      data: row
+     
+    });
+  
+   
+    dialogRef.afterClosed().subscribe(() => {
+      this.ngOnInit();
+    });
+  }
+
+  openUpdateFunctionModal(row:any) {
+    const dialogRef = this.dialog.open(UpdatefunctionmodalComponent, {
+      width: '400px',
+      data: row
+     
+    });
+  
+   
+    dialogRef.afterClosed().subscribe(() => {
+      this.ngOnInit();
+    });
+  }
+
   openModuleForm(): void { 
     const dialogRef = this.dialog.open(ModuleFormComponent, {
       width: '350px', 
@@ -92,7 +127,7 @@ export class NestedGridComponent implements OnInit, AfterViewInit {
 
   openSubModuleForm(): void { 
     const dialogRef = this.dialog.open(SubmoduleformComponent, {
-      width: '350px', 
+      width: '400px', 
       data: {}
     }).afterClosed().subscribe(() => {
       this.ngOnInit();
@@ -103,6 +138,8 @@ export class NestedGridComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(FonctionformComponent, {
       width: '350px', 
       data: {}
+    }).afterClosed().subscribe(() => {
+      this.ngOnInit();
     });
   }
 

@@ -16,12 +16,13 @@ import { SubModule } from 'src/model/SubModule';
 })
 export class SubmoduleformComponent implements OnInit{
 
-  submoduleForm!: FormGroup;
-  functions: ModuleFunction[] = [];
-  selectedFunctions: ModuleFunction[] = [];
-  submodule!: SubModule;
+  // submoduleForm!: FormGroup;
+  // functions: ModuleFunction[] = [];
+  // selectedFunctions: ModuleFunction[] = [];
+  // submodule!: SubModule;
 
- 
+  addSubmoduleForm!: FormGroup;
+  modules: any[] = [];
 
 
   constructor( private formBuilder: FormBuilder,
@@ -38,80 +39,49 @@ export class SubmoduleformComponent implements OnInit{
   
 
   ngOnInit() :void{
-    this.submoduleForm = this.formBuilder.group({
-      subModuleName: [this.data?.submodule?.subModuleName || '', Validators.required],
-      functions: [this.selectedFunctions],
+
+    this.addSubmoduleForm = this.formBuilder.group({
+      subModuleName: ['', Validators.required],
+      path: ['', Validators.required],
+      moduleId: ['', Validators.required]
     });
 
-    this.functionService
-    .getAllFunction()
-    .pipe(
-      map((functions: ModuleFunction[])=>{
-        return functions.map((fct)=>{
-          const selected = this.data?.submodule?.functions?.some((f:ModuleFunction)=>f.id===fct.id)|| false;
-          return {
-            ...fct,
-            selected
-          }
-        })
-      })
-    )
-    .subscribe((functions)=>{
-      this.functions=functions
-      this.selectedFunctions=functions.filter((f)=>f.selected)
-      this.submoduleForm.patchValue({functions: this.selectedFunctions})
-    })
-    
-   
-   
-  
-  }
-
-  saveSubModule():void{
-    if (this.submoduleForm?.valid){
-      const submoduleToSend={
-        id:this.data?.submodule?.id||0,
-        subModuleName:this.submoduleForm.value.subModuleName,
-        functions:this.selectedFunctions[0]
+    this.moduleService.getAllModules().subscribe(
+      data => {
+        this.modules = data;
+      },
+      error => {
+        console.log('Error retrieving modules', error);
       }
-      if (submoduleToSend.id === 0) {
-        this.submoduleService.addSubmodule(submoduleToSend).subscribe((submodule: Object) => {
-          this.dialogRef.close();
-        });
-    }else{
-      const submoduleToSend = {
-        id: this.data?.submodule?.id||0 ,
-        subModuleName: this.submoduleForm.value.subModuleName,
-        functions: this.selectedFunctions[0].map((fct:ModuleFunction)=> {
-          return {
-            id: fct.id,
-            functionName: fct.functionName,
-           
-          };
-        }),
-        
-      };
-      this.submoduleService.updateSubModule(submoduleToSend,submoduleToSend.id).subscribe((submodule: Object)=>{
-        this.dialogRef.close();
-      })
+    );
+
+
+}
+
+onSubmit(): void {
+  if (this.addSubmoduleForm.invalid) {
+    return;
+  }
+
+  const newSubmodule = {
+    subModuleName: this.addSubmoduleForm.controls['subModuleName'].value,
+    path: this.addSubmoduleForm.controls['path'].value,
+    module: {
+      id: this.addSubmoduleForm.controls['moduleId'].value
     }
-  }
-}
-cancel(): void {
-  this.dialogRef.close();
-}
+  };
 
-toggleFunction(fct: ModuleFunction): void {
-  const index = this.selectedFunctions.findIndex((s) => s.id === fct.id);
-  if (index !== -1) {
-    this.selectedFunctions.splice(index, 1);
-  } else {
-    this.selectedFunctions.push(fct);
-  }
-  console.log(this.selectedFunctions)
+  this.submoduleService.addSubmodule(newSubmodule).subscribe(
+    response => {
+      console.log('New submodule added:', response);
+      this.dialogRef.close();
+      // handle success
+    },
+    error => {
+      console.error('Error adding submodule:', error);
+      // handle error
+    }
+  );
 }
- 
-
- 
 
 }

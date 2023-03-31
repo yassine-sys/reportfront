@@ -31,6 +31,8 @@ import { ModuleFormComponent } from './components/moduleform/moduleform.componen
 import { MatChipsModule } from '@angular/material/chips';
 import { UserManagmentComponent } from './components/user-managment/user-managment.component';
 import { FonctionformComponent } from './components/fonctionform/fonctionform.component';
+import { UpdatesubmodulemodalComponent } from './components/updatesubmodulemodal/updatesubmodulemodal.component';
+import { UpdatefunctionmodalComponent } from './components/updatefunctionmodal/updatefunctionmodal.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { FonctionformComponent } from './components/fonctionform/fonctionform.co
     SubmoduleformComponent,
     ModuleFormComponent,
     UserManagmentComponent,
-    FonctionformComponent
+    FonctionformComponent,
+    UpdatesubmodulemodalComponent,
+    UpdatefunctionmodalComponent
   ],
   imports: [
     BrowserModule,

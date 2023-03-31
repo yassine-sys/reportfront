@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ data?.fonction ? 'Edit' : 'Add' }} Fonction</h2>
+<!-- <h2 mat-dialog-title>{{ data?.fonction ? 'Edit' : 'Add' }} Fonction</h2>
 <div mat-dialog-content>
     <form [formGroup]="functionForm">
         <mat-form-field>
@@ -32,4 +32,29 @@
         {{ data?.fonction ? 'Update' : 'Add' }} Fonction
     </button>
     <button mat-raised-button mat-dialog-close>Cancel</button>
-</div>
+</div> -->
+
+<div >
+    <h2>Add Fonction</h2>
+    <form [formGroup]="functionForm" (ngSubmit)="onSubmit()">
+      
+        <label for="functionName">Function Name:</label>
+        <input type="text" class="form-control" id="functionName" formControlName="functionName" required>
+        <div *ngIf="functionForm.controls['functionName'].invalid && (functionForm.controls['functionName'].dirty || functionForm.controls['functionName'].touched)" class="text-danger">
+          <div *ngIf="functionForm.controls['functionName'].errors ">Function Name is required.</div>
+        
+      </div>
+     
+      
+        <label for="submoduleId">Submodule:</label>
+        <select class="form-control" id="submoduleId" formControlName="submoduleId" required>
+          <option *ngFor="let submodule of submodules" [value]="submodule.id">{{ submodule.subModuleName }}</option>
+        </select>
+      
+      
+
+      <button mat-raised-button color="primary" type="submit" class="btn btn-primary">Add Function</button>
+      <button mat-raised-button mat-dialog-close (click)="cancel()">Cancel</button>
+    </form>
+  </div>
+  

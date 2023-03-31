@@ -40,7 +40,7 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    
                                     <th>ID</th>
                                     <th>Sub-Module Name</th>
                                     <th>Path</th>
@@ -56,7 +56,13 @@
                                             <button mat-icon-button (click)="deleteSubmodule(subModule.id)" class="btn">
                                             <mat-icon class="delete">delete</mat-icon>
                                         </button>
-                                        </td>
+                                        
+                                        
+                                            <button mat-icon-button class="btn" (click)="openUpdateSubmoduleModal(subModule)">
+                                        <mat-icon class="edit">edit</mat-icon>
+                                    </button>
+                                </td>
+                                            
                                     </tr>
                                     <tr *ngIf="subModule.functions.length">
                                         <td class="expand-collapse-column"></td>
@@ -83,7 +89,9 @@
                                                             <td>{{ func.functionName }}</td>
                                                             <td>
                                                                 <button mat-icon-button (click)="deleteFunction(func.id)" class="btn">
-                                                                <mat-icon class="delete">delete</mat-icon>
+                                                                <mat-icon class="delete">delete</mat-icon></button>
+                                                                <button mat-icon-button (click)="openUpdateFunctionModal(func)" class="btn">
+                                                                    <mat-icon class="edit">edit</mat-icon>
                                                             </button>
                                                             </td>
                                                         </tr>

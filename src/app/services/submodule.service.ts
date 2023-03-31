@@ -20,7 +20,7 @@ export class SubmoduleService {
   public deleteSubModule(id:any){
     return this.http.delete(`${"http://localhost:8080"}/submodule/delete/`+id);
   }
-  public updateSubModule(submodule:any,id:number):Observable<Object>{
+  public updateSubModule(id:number,submodule:any){
     return this.http.put(`${"http://localhost:8080"}/submodule/edit/${id}`,submodule);
   }
 }
